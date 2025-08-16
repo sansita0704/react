@@ -1,30 +1,34 @@
 # What is React?
 
-React is a JS library used for building dynamic and interactive user interfaces.
+React is a **JS library** used for building dynamic and interactive user interfaces.
 
-### Why was React created?
+## Why was React created?
 
-When our HTML page is loaded in the browser, the browser takes the HTML code and creates a tree-like structure called DOM (Document Object Model). This allows us to use JS and change the page content dynamically in response to user interactions.
+When a browser loads an HTML page, it converts the HTML code into a **tree-like structure** called the **DOM (Document Object Model)**.
+This allows us to use JS to dynamically update the page content in response to user interactions.
 
-But as our applications grow, using plain JS (vanilla JS) to access and manipulate DOM elements can become really challenging. Also, our code can become complex to manage.
+However, as applications grow in size, using plain JavaScript (vanilla JS) to directly manipulate the DOM becomes:
 
-This is where React comes into the picture.  
-With React, we do not have to worry about querying and updating elements. Instead, we describe our web page using small and reusable components, and React will take care of efficiently creating and updating DOM elements.
+-   Challenging to manage
+-   Prone to complex, error-prone code
+
+### Solution: React
+
+With React, we do not have to worry about querying and updating elements. Instead, we describe our web page using **small and reusable components** and React will take care of efficiently creating and updating DOM elements.
 
 ![Components](Screenshots/1.%20Components.png)
 
-Components help us write reusable, modular, and better-organized code.
-
-A React application is a tree of components with `App` being the root of the tree.
+**Components** help us write reusable, modular, and better-organized code.
+A React application is a **tree of components** with `App` being the root of the tree.
 
 ![Component Tree](Screenshots/2.%20Component%20Tree.png)
 
 # Creating a React App
 
-There are 2 ways to create a React app:
+There are 2 ways:
 
-1. Using the official tool provided by the React team called **Create React App (CRA)**
-2. **Vite**: It is a build tool which is much faster and gives us smaller bundle sizes
+1. **Create React App (CRA)** – Official React tool.
+2. **Vite** – A modern build tool that is faster and produces smaller bundles.
 
 ---
 
@@ -34,17 +38,17 @@ There are 2 ways to create a React app:
 npm create vite@latest
 ```
 
-This will ask some questions like:
+This prompts:
 
-1. **Project name**: by default, it is `vite-project`
-2. **Select a framework**: React
-   (So, using Vite, we can create any kind of JS project.)
-3. **Select a variant (language)**: TypeScript
+1. **Project name** → default is `vite-project`
+2. **Select a framework** → React
+   (Vite can create other JS projects too.)
+3. **Select a variant (language)** → TypeScript
 
 ```bash
 cd react-app
-npm i         # to install all 3rd party libraries
-npm run dev   # to run our web server
+npm i         # install 3rd party libraries
+npm run dev   # run our web server
 ```
 
 With `npm run dev`, we have a web server at the address [http://localhost:5173](http://localhost:5173).
@@ -53,63 +57,55 @@ With `npm run dev`, we have a web server at the address [http://localhost:5173](
 
 # Project Structure
 
-### Brief overview of `react-app` folder
+Inside the `react-app` folder:
 
--   **node_modules**: Folder where all 3rd party libraries like React and other tools are installed
+-   **node_modules** → Stores third-party libraries (e.g., React)
 
--   **public**: Folder where public assets of our website exist like images, video files, etc.
+-   **public** → Static assets (images, videos, etc.)
 
--   **src**: Source code of our app.
-    When we create our app, this folder has a single component called App component.
+-   **src** → Source code folder
 
--   **index.html**:
+    -   By default contains one component: `App`
 
-    -   It has some basic HTML code.
-    -   It has a `div` with the id of `root` which is the container for our application.
+-   **index.html**
 
-    ```html
-    <div id="root"></div>
-    ```
+    -   Contains a `div` with id `root` → container for the React app
+    -   Includes a script which is the entry point to our application:
 
-    -   Also, it has a script element which is the entry point to our application.
+        ```html
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+        ```
 
-    ```html
-    <script type="module" src="/src/main.tsx"></script>
-    ```
+-   **package.json** → Metadata: project name, dependencies, scripts, etc.
 
--   **package.json**: It has info about our project like name of project, dependencies, dev dependencies, etc.
+-   **Dev dependencies** → Used only during development (not included in production build)
 
--   **Dev dependencies**:
-    These are only used for development.
-    They are not going to be deployed with our application in the future.
+-   **tsconfig.json** → TypeScript compiler configuration
 
--   **tsconfig.json**: It has a bunch of settings for telling the TS compiler how to compile our code to JS.
+-   **vite.config.ts** → Vite configuration file
 
--   **vite.config.ts**: Configuration file for Vite.
-
-> We generally do not touch these configuration files.
+> Usually, you don’t need to modify the configuration files.
 
 # Creating a React Component
 
-To create a React component, we add a new file in `src` folder called `Message.tsx`.
+React components are usually stored in the `src` folder.
+File extensions:
 
--   `.ts`: plain TS file
--   `.tsx`: for React components
+-   `.ts` → Plain TS file
+-   `.tsx` → TS + JSX (used for React components)
 
-There are 2 ways to create a React component:
+There are 2 types of components:
 
-1. JS class
-2. JS function
-
-These days, we use function-based components as they are more concise and easier to write.
+1. Class components (older, less common today)
+2. Function components (modern, concise, widely used)
 
 ---
 
-### `Message.tsx`
+### Example: `Message.tsx`
 
 For naming func-based components, we use PascalCase.
-This is the convention used by React and other developers.
-
+This is the convention used by React and other developers.  
 In func definition, we describe how the UI will look like where we will use this component.
 
 Let’s say that wherever we use this component, we want to render an `h1` element with a message.
@@ -121,30 +117,23 @@ function Message() {
 }
 ```
 
-Here, we are not writing HTML code in the middle of JS code.
-This syntax is called **JSX** (JavaScript XML).
+-   This syntax is **JSX** (JavaScript XML), not plain HTML.
+-   JSX gets compiled into JavaScript by tools like **Babel**.
+    → Try it at [Babel REPL](https://babeljs.io/repl).
 
-JSX code, under the hood, is going to get compiled down to JS code.
-
-> Go to [https://babeljs.io/repl](https://babeljs.io/repl) to see how JSX code gets converted to JS code.
-
-Now, we have a basic React component.
+Now, we have a basic React component.  
 To use this, we have to export it as a default object from this module:
 
 ```tsx
 export default Message;
 ```
 
-Now, we can use this component in our `App` component.
-
 ---
 
-### `App.tsx`
+### Using the Component in `App.tsx`
 
 > We have written everything from scratch in this file.
 
-In `App` component, we have a div.
-Inside the div, we have our `Message` component.
 When we import the `Message` component, we can use it in a file just like a regular HTML element.
 
 ```tsx
@@ -177,12 +166,9 @@ export default App;
 
 With these 2 files, now if we go to our terminal, we will see our app running.
 
----
-
--   **HMR**: Hot Module Replacement
+## Hot Module Replacement (HMR)
 
 -   It is a technique that allows real-time updating of individual modules or components within a running application without requiring a full page reload.
-
 -   So Vite, under the hood, monitors our files for changes.
 -   Whenever we make any changes, it will automatically refresh our page in the browser.
 
@@ -220,9 +206,11 @@ With current implementation, we have a component tree with `App` being the root 
 
 ![Virtual DOM](Screenshots/3.%20Virtual%20DOM%20-%201.png)
 
--   When the state or the data of a component changes, React updates the corresponding node in the virtual DOM to reflect the new state.
--   Then, it compares the current version of virtual DOM with the previous version to identify the nodes that should be updated.
--   Then, it updates those nodes in the actual DOM.
+-   When state/data changes:
+
+    1. React updates the the corresponding node in virtual DOM
+    2. Compares new vs. old virtual DOM
+    3. Updates only the necessary parts of the actual DOM
 
 ![Virtual DOM](Screenshots/3.%20Virtual%20DOM%20-%202.png)
 
@@ -262,8 +250,8 @@ In contrast to React, we have another tools like Angular and Vue which are calle
 
 ### Library v/s Framework
 
--   **Library**: A tool that provides specific functionality
--   **Framework**: A set of tools and guidelines for building apps
+-   **Library** → A single tool that provides a specific functionality
+-   **Framework** → A set of tools and guidelines for building apps
 
 So, library is like a single tool but framework is like a tool set.
 
@@ -280,3 +268,5 @@ But in a real life application we need many more things like:
 -   Animations
 
 In React Ecosystem, we have diff libraries for these tasks.
+
+This collection of tools + React is known as the **React Ecosystem**.
