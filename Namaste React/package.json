@@ -1,0 +1,21 @@
+{
+    "name": "namaste-react",
+    "version": "1.0.0",
+    "description": "Namaste react notes",
+    "license": "ISC",
+    "author": "Sansita Jain",
+    "type": "commonjs",
+    "scripts": {
+        "test": "jest"
+    },
+    "devDependencies": {
+        "parcel": "^2.15.4"
+    },
+    "dependencies": {
+        "react": "^19.1.1",
+        "react-dom": "^19.1.1"
+    },
+    "browserslist": [
+        "last 2 chrome version"
+    ]
+}
