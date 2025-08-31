@@ -362,6 +362,27 @@ At the end of the day, React is just JS.
 -   All JS rules apply here.
 -   We cannot use a var or component before initialization.
 
+## Example
+
+### React Code
+
+```jsx
+const Heading = () => (
+    <div id="container">
+        <h1 className="heading" tabIndex="5">
+            This is a React Functional Component.
+        </h1>
+        <Title />
+        <h2>{number + 100}</h2>
+        {heading}
+    </div>
+);
+```
+
+### Output in Browser
+
+![JSX.png](JSX%20Output.jpeg)
+
 ## XSS Protection
 
 -   Let's say, we have some data coming from an api.
