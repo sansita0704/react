@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: "Poppins";
+}
+
+/* Header */
+
+.header {
+    display: flex;
+    padding: 1.5rem 4rem;
+    font-size: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(245, 120, 11);
+    color: white;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    width: 6rem;
+    border-radius: 50%;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+}
+
+.nav-items-list {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.nav-list-item {
+    margin-left: 4rem;
+}
+
+.cart {
+    font-size: 3.5rem;
+}
+
+/* Body */
+
+.restaurant-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300, 1fr));
+    gap: 2.5rem;
+    padding: 0 5rem;
+}
+
+.restaurant-card {
+    overflow: hidden;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    border: 1px solid rgb(211, 210, 210);
+
+    transition: transform 0.2s ease-in, box-shadow 0.2s ease-in;
+    cursor: pointer;
+}
+
+.restaurant-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.card-image {
+    aspect-ratio: 5 / 3;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%; /* fixed height for all cards */
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-heading {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.dish-details {
+    display: flex;
+    margin-top: 2rem;
+    font-size: 1.4rem;
+    justify-content: space-between;
+}
+
+.food-rating {
+    border-radius: 5px;
+    padding: 0.1rem 0.4rem;
+    color: white;
+    font-weight: 600;
+}
+
+/* Filter */
+
+.top-rated {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    outline: 0;
+    border: 1px solid rgb(211, 210, 210);
+    border-radius: 15px;
+    font-size: 1.4rem;
+    cursor: pointer;
+
+    transition: border 0.2s ease-in;
+}
+
+.top-rated:hover,
+.top-rated:focus {
+    border: 1px solid rgb(245, 120, 11);
+}
