@@ -1,14 +1,14 @@
+import { RES_IMG_BASE_URL } from "../utils/constants";
+
 const RestaurantCard = ({ restaurantData }) => {
     const { cloudinaryImageId, name, cuisines, avgRating, costForTwo } =
         restaurantData.info;
     const { deliveryTime } = restaurantData.info.sla;
-    const BASE_URL =
-        "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/";
 
     return (
         <div className="restaurant-card">
             <div className="card-image">
-                <img src={BASE_URL + cloudinaryImageId}></img>
+                <img src={RES_IMG_BASE_URL + cloudinaryImageId}></img>
             </div>
 
             <div className="card-content">
@@ -21,7 +21,7 @@ const RestaurantCard = ({ restaurantData }) => {
                         )}
                     {cuisines.length > 3 && "..."}
                 </p>
-                <div className="dish-details">
+                <div className="restaurant-details">
                     <span className="food-rating">
                         {avgRating}
                         <i

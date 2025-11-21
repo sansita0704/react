@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const logo = new URL("../assets/logo.jpeg", import.meta.url);
+import { Link } from "react-router";
 
 const Header = () => {
     const [isLogin, setIsLogin] = useState(false);
     console.log("Header Rendered");
+
+    useEffect(() => {
+        console.log("Header's useEffect Called");
+    }, []);
 
     return (
         <div className="header">
@@ -12,9 +17,15 @@ const Header = () => {
             </div>
             <div className="nav-items">
                 <ul className="nav-items-list">
-                    <li className="nav-list-item">Home</li>
-                    <li className="nav-list-item">About Us</li>
-                    <li className="nav-list-item">Contact Us</li>
+                    <li className="nav-list-item">
+                        <Link to={"/"}>Home</Link>
+                    </li>
+                    <li className="nav-list-item">
+                        <Link to={"/about"}>About Us</Link>
+                    </li>
+                    <li className="nav-list-item">
+                        <Link to={"/contact"}>Contact Us</Link>
+                    </li>
                     <li
                         className="nav-list-item"
                         onClick={() => {

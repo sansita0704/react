@@ -12,6 +12,22 @@ body {
     font-family: "Poppins";
 }
 
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
 /* Header */
 
 .header {
@@ -23,7 +39,6 @@ body {
     background-color: rgb(245, 120, 11);
     color: white;
     font-weight: 600;
-    margin-bottom: 2.5rem;
 }
 
 .logo-container {
@@ -53,6 +68,10 @@ body {
     cursor: pointer;
 }
 
+.nav-list-item a {
+    color: white;
+}
+
 .cart {
     font-size: 3.5rem;
 }
@@ -74,6 +93,7 @@ body {
 
     transition: transform 0.2s ease-in, box-shadow 0.2s ease-in;
     cursor: pointer;
+    height: 100%;
 }
 
 .restaurant-card:hover {
@@ -101,7 +121,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.dish-details {
+.restaurant-details {
     display: flex;
     margin-top: 2rem;
     font-size: 1.4rem;
@@ -111,18 +131,16 @@ body {
 .food-rating {
     background-color: rgb(7, 158, 7);
     border-radius: 5px;
-    padding: 0.1rem 0.4rem;
+    padding: 0.1rem 0.5rem;
     color: white;
     font-weight: 600;
+    width: fit-content;
 }
 
 /* Filter */
 
 .filter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
+    margin: 2.5rem 0;
     gap: 2rem;
 }
 
@@ -217,4 +235,111 @@ body {
     text-align: center;
     font-size: 2rem;
     margin: 2rem 0;
+}
+
+/* Restaurant Menu */
+
+.menu {
+    padding: 0 25rem;
+}
+
+.menu-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 10rem;
+    background-color: rgba(245, 120, 11, 0.2);
+    margin: 0 -25rem;
+}
+
+.res-image-container img {
+    border-radius: 20px;
+    aspect-ratio: 5 / 3;
+    width: 80%;
+    object-fit: cover;
+    max-width: 350px;
+}
+
+.res-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    gap: 1rem;
+    font-size: 1.5rem;
+}
+
+.res-info {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.menu-body {
+    margin-top: 5rem;
+    font-size: 1.7rem;
+}
+
+/* Menu Card */
+
+.menu-card {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid rgb(229, 228, 228);
+    padding-bottom: 1rem;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.item-info .food-rating {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+}
+
+.item-desc {
+    color: rgb(102, 101, 101);
+}
+
+.menu-card-actions {
+    flex-direction: column;
+    align-self: center;
+}
+
+.menu-card-actions img {
+    border-radius: 20px;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+
+.btn-add {
+    background-color: white;
+    color: green;
+    font-weight: bold;
+    border: 1px solid rgb(210, 210, 210);
+    outline: none;
+    padding: 1rem 4rem;
+    border-radius: 10px;
+    font-size: 1.7rem;
+    transform: translateY(-50%);
+
+    transition: box-shadow 0.2s ease-in;
+}
+
+.btn-add:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-show-more {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: rgb(102, 101, 101);
+    font-weight: bold;
+    font-size: 1.5rem;
 }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router";
+import { RES_LIST_API } from "../utils/constants";
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -16,11 +18,11 @@ const Body = () => {
 
     const fetchData = async () => {
         const response = await fetch(
-            "https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.918938&lng=75.7887458&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+            // "https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.918938&lng=75.7887458&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+            RES_LIST_API
         );
         const data = await response.json();
 
-        console.log(data);
         setFilteredRestaurants(
             data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
                 ?.restaurants
@@ -39,7 +41,7 @@ const Body = () => {
         <Shimmer />
     ) : (
         <div className="body">
-            <div className="filter">
+            <div className="flex-container filter">
                 <div className="search-container">
                     <input
                         type="text"
@@ -72,11 +74,11 @@ const Body = () => {
                 <button
                     className="top-rated"
                     onClick={() => {
-                        const filteredList = listOfRestaurants.filter(
+                        const filteredList = filteredRestaurants.filter(
                             (item) => item.info.avgRating > 4
                         );
 
-                        setListOfRestaurants(filteredList);
+                        setFilteredRestaurants(filteredList);
                     }}
                 >
                     Top Rated Restaurants
@@ -87,10 +89,12 @@ const Body = () => {
             ) : (
                 <div className="restaurant-container">
                     {filteredRestaurants.map((restaurant) => (
-                        <RestaurantCard
+                        <Link
+                            to={"/restaurants/" + restaurant.info.id}
                             key={restaurant.info.id}
-                            restaurantData={restaurant}
-                        />
+                        >
+                            <RestaurantCard restaurantData={restaurant} />
+                        </Link>
                     ))}
                 </div>
             )}
