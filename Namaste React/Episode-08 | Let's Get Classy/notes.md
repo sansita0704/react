@@ -1,0 +1,1044 @@
+# Class-Based Components
+
+-   Class-based components are the **older way** of writing React components.
+
+**Functional Component**
+
+```js
+const User = () => {
+    return (
+        <div className="user-card">
+            <h2>Sansita Jain</h2>
+            <h3>Jaipur, Rajasthan</h3>
+            <p>sansita@gmail.com</p>
+        </div>
+    );
+};
+
+export default User;
+```
+
+**Equivalent Class-Based Component**
+
+```js
+import React from "react";
+
+class UserClass extends React.Component {
+    render() {
+        return (
+            <div className="user-card">
+                <h2>Sansita Jain</h2>
+                <h3>Jaipur, Rajasthan</h3>
+                <p>sansita@gmail.com</p>
+            </div>
+        );
+    }
+}
+
+export default UserClass;
+```
+
+### Explanation
+
+-   `extends React.Component` tells React that this is a class-based component.
+-   `React.Component` is a base class provided by React.
+-   Every class-based component must have a `render()` method.
+-   `render()` returns JSX that gets displayed on the UI.
+
+### Definitions
+
+-   **Functional Component**: A JavaScript function that returns JSX.
+-   **Class Component**: A JavaScript class with a `render()` method that returns JSX.
+
+### Usage
+
+```js
+import User from "./User";
+import UserClass from "./UserClass";
+
+const About = () => {
+    return (
+        <div className="about">
+            <User />
+            <UserClass />
+        </div>
+    );
+};
+```
+
+# Passing Props
+
+## Functional Component
+
+```js
+const User = ({ name }) => {
+    return (
+        <div className="user-card">
+            <h2>{name}</h2>
+            <h3>Jaipur, Rajasthan</h3>
+            <p>sansita@gmail.com</p>
+        </div>
+    );
+};
+
+export default User;
+```
+
+## Class-Based Component
+
+```js
+class UserClass extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { name } = this.props;
+
+        return (
+            <div className="user-card">
+                <h2>{name}</h2>
+                <h3>Jaipur, Rajasthan</h3>
+                <p>sansita@gmail.com</p>
+            </div>
+        );
+    }
+}
+```
+
+### Notes
+
+-   Passing props is the **same** in both types of components.
+-   The difference lies in how props are accessed:
+
+    -   Functional: Directly as parameters
+    -   Class-based: Using `this.props`
+
+-   Props passed to `UserClass` are bundled in an object and "received in the constructor".
+-   `super(props)` is required to initialize `this.props`.
+
+# Creating State Variables
+
+## Functional Component
+
+```js
+const User = ({ name }) => {
+    const [count, setCount] = useState(0);
+    const [count2, setCount2] = useState(1);
+
+    return (
+        <div className="user-card">
+            <h2>{name}</h2>
+            <p>Count: {count}</p>
+            <p>Count2: {count2}</p>
+        </div>
+    );
+};
+```
+
+## Class-Based Component
+
+```js
+class UserClass extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            count: 0,
+            count2: 1,
+        };
+    }
+
+    render() {
+        const { name } = this.props;
+        const { count, count2 } = this.state;
+
+        return (
+            <div className="user-card">
+                <h2>{name}</h2>
+                <p>Count: {count}</p>
+                <p>Count2: {count2}</p>
+            </div>
+        );
+    }
+}
+```
+
+### Notes
+
+-   `state` is a special object that stores all state values.
+-   **state** is a reserved word in React. It is a single large object that holds all state variables of a component.
+
+-   The Constructor:
+
+    -   Runs when an instance of the class is created.
+    -   Is the best place for initializing state variables and receiving props.
+
+> **Rendering a functional component** = calling the function → loading or mounting that component onto the webpage.
+> **Rendering a class component** = creating an instance of the class → loading that class-based component onto the webpage.
+
+**NOTE:**
+
+-   In functional components also, behind the scenes, React uses a single big object to keep all state variables.
+
+## Updating State
+
+### In Functional Component
+
+We use the setter function returned by `useState`.
+
+### In Class-Based Component
+
+We use `this.setState()`.
+
+**Incorrect (Direct Update)**
+
+```js
+count++;
+```
+
+**Correct Way**
+
+```js
+this.setState({
+    count: this.state.count + 1,
+});
+```
+
+### Explanation
+
+-   The object passed to the `setState()`, contains the updated value of our state variables.
+-   So, `setState()` tells React which values changed.
+-   React then re-renders the component with the new values.
+-   React **does not replace the full state object**; it only merges updated fields.
+
+### Behind the Scenes
+
+-   Whenever `setState()` is called, React takes the object passed to it and identifies which state variables have changed.
+-   It updates **only those variables** and does not modify the other state values.
+
+<br>
+
+-   When `setState()` is triggered, React starts the **reconciliation cycle**.
+
+-   It compares the previous state object with the new one (diffing) and updates only the parts that have changed.
+
+-   Finally, React re-renders the component using the updated state values.
+
+# Lifecycle of a Class-Based Component
+
+-   For the `UserClass` component, the `About` component acts as the parent component.
+
+-   Whenever the `About` component is rendered, mounted, or loaded onto the webpage, React begins rendering the JSX written inside it.
+
+-   As soon as React encounters the `UserClass` component, it starts loading that component.
+
+-   Since `UserClass` is a class-based component, React creates a **new instance of the class** while rendering it.
+
+-   As soon as the instance is created, the **constructor** is called first.
+
+-   After the constructor runs, the `render()` method is called.
+
+**Order of execution:**
+**Constructor → render()**
+
+## Basic Flow
+
+When the parent is also a class based component:
+
+1. Parent constructor is called.
+2. Parent render runs.
+3. Child component is encountered.
+4. Child instance is created.
+5. Child constructor runs.
+6. Child render runs.
+
+## Example: Parent and Child
+
+### Parent Component
+
+```js
+class About extends Component {
+    constructor(props) {
+        super(props);
+        console.log("Parent constructor");
+    }
+
+    render() {
+        console.log("Parent render");
+        return (
+            <div>
+                <UserClass name="Sansita Jain" />
+            </div>
+        );
+    }
+}
+```
+
+### Child Component
+
+```js
+class UserClass extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log("Child constructor");
+
+        this.state = { count: 0 };
+    }
+
+    render() {
+        console.log("Child render");
+        return <p>Count</p>;
+    }
+}
+```
+
+![](./Screenshots/1.jpeg)
+
+## Lifecycle with `componentDidMount()`
+
+**Lifecycle order**
+
+1. constructor
+2. render
+3. componentDidMount
+
+**Execution Order**
+
+1. Parent constructor
+2. Parent render
+3. Child constructor
+4. Child render
+5. Child componentDidMount
+6. Parent componentDidMount
+
+### Key Note
+
+-   During parent's rendering, React moves to the child component and starts executing the child’s lifecycle methods.
+-   Once the child component completes its lifecycle phase, React returns to the parent and finishes rendering it.
+-   After the parent component is fully mounted, `componentDidMount()` of the parent is called.
+
+So:
+
+-   Parent rendering is **paused** while the child completes its lifecycle.
+-   After children mount, the parent finishes mounting.
+
+### Use Case of `componentDidMount()`
+
+#### Best use: API Calls
+
+-   We use `componentDidMount()` to make API calls in class-based components because it runs **after the component is rendered** on the UI.
+
+-   This follows the second approach to rendering, which provides better user experience (UX).
+
+-   First, React renders the component with basic or placeholder content.
+
+-   Then, the API call is made, and once the data arrives, the component is re-rendered with the actual content.
+
+-   Since we want the API call to happen **after the UI is visible**, `componentDidMount()` is the correct place to do it.
+
+-   We do this because we **do not want the page to remain blank** until the data is fetched.
+
+-   React aims to display the UI as quickly as possible, then make the API request, and finally update the UI with real data.
+
+-   Just like we make API calls inside `useEffect()` in functional components,
+    we make API calls inside `componentDidMount()` in class-based components.
+
+### NOTE
+
+```js
+<UserClass name={"Sansita Jain (class)"} />
+<UserClass name={"Hello World (class)"} />
+```
+
+-   Using `UserClass` twice means creating **two different instances** of the same class.
+
+## Question Asked
+
+When a Parent has **multiple child components**,
+in what order are lifecycle methods executed?
+
+### The Wrong Assumption (Common Mistake)
+
+Most people assume the lifecycle will go like this:
+
+```
+Parent constructor
+Parent render
+
+Child1 constructor
+Child1 render
+Child1 componentDidMount
+
+Child2 constructor
+Child2 render
+Child2 componentDidMount
+
+Parent componentDidMount
+```
+
+### The Actual Execution Order
+
+Real order in React:
+
+```
+Parent constructor
+Parent render
+
+Child1 constructor
+Child1 render
+
+Child2 constructor
+Child2 render
+
+Child1 componentDidMount
+Child2 componentDidMount
+
+Parent componentDidMount
+```
+
+Key insight:
+
+> React does not call componentDidMount immediately after render for each child when multiple children exist.
+
+### Why This Happens - Two Phases in React Rendering
+
+In React when a component is mounted, it is mounted in 2 phases:
+
+#### 1. Render Phase (Fast, Virtual DOM)
+
+Includes:
+
+-   constructor()
+-   render()
+
+This phase:
+
+-   Creates Virtual DOM
+-   Runs reconciliation (diffing)
+-   Does not touch real DOM
+
+#### 2. Commit Phase (Slow, Real DOM)
+
+Includes:
+
+-   Actual DOM update
+-   componentDidMount()
+
+This phase:
+
+-   Updates the browser DOM
+-   Is expensive
+-   Happens after render phase finishes
+
+## Lifecycle Diagram
+
+During **Mounting Phase**:
+
+```
+Constructor → Render → DOM Update → ComponentDidMount
+```
+
+> Go to:  
+> [React Life Cycle Method Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+### What React Optimizes
+
+React **batches** the rendering of multiple child components.
+
+Meaning:
+
+-   It completes the **render phase** for all children first
+-   Then executes the **commit phase** for all children together
+
+## Execution
+
+### Step 1 - Parent mount begins
+
+```
+Parent constructor
+Parent render
+```
+
+### Step 2 - First child render phase
+
+```
+Child1 constructor
+Child1 render
+```
+
+### Step 3 - Second child render phase
+
+```
+Child2 constructor
+Child2 render
+```
+
+At this point:
+
+-   All render phases are complete.
+-   Virtual DOM differences are calculated.
+-   Reconciliation has finished.
+
+### Step 4 - Commit Phase (batched)
+
+Now React touches the real DOM:
+
+```
+Child1 componentDidMount
+Child2 componentDidMount
+```
+
+### Step 5 - Parent's Commit Phase
+
+```
+Parent componentDidMount
+```
+
+### Why React Does This Batching
+
+Because:
+
+-   **DOM manipulation is expensive**
+-   Virtual DOM is cheap (just JS objects)
+-   Updating the real DOM is slow
+
+React wants to minimize DOM access.
+
+So React:
+
+-   Batches render phase (cheap)
+-   Batches commit phase (expensive)
+-   Performs DOM update once in a group
+
+React:
+
+1. Runs render phase for all children
+2. Builds virtual DOM trees
+3. Finds diff
+4. Enters commit phase
+5. **Updates DOM in a single batch**
+6. Calls componentDidMount after DOM commit
+
+## Final Interview One-Liner
+
+> React batches the render phase for all components first, and only then enters the commit phase where DOM updates and componentDidMount calls are executed, which is why lifecycle ordering changes with multiple children.
+
+# Making API Calls
+
+-   In class based component, we can directly make the `componentDidMount` function an async function.
+-   Then, we will call `fetch()` inside it.
+
+```js
+class UserClass extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            userInfo: {
+                name: "dummy",
+                location: "defaultLocation",
+            },
+        };
+    }
+
+    async componentDidMount() {
+        const response = await fetch(
+            "https://api.github.com/users/sansita0704"
+        );
+        const data = await response.json();
+
+        console.log(data);
+        this.setState({ userInfo: data });
+    }
+
+    render() {
+        // const { name } = this.props;
+        const { name, location, avatar_url } = this.state.userInfo;
+
+        return (
+            <div className="flex-container user-card">
+                <img className="user-img" src={avatar_url}></img>
+                <h2>{name}</h2>
+                <h3>{location}</h3>
+                <p>sansita@gmail.com</p>
+            </div>
+        );
+    }
+}
+```
+
+## Mounting Phase (First Load)
+
+When component loads for the first time:
+
+### 1. Constructor Runs
+
+-   State variable is created with default data
+-   Default values are:
+
+    -   dummy name
+    -   dummy location
+    -   dummy image
+
+### 2. Render Runs
+
+-   Component renders with dummy data
+-   DOM is updated with placeholder content
+
+![](./Screenshots/2.jpeg)
+
+### 3. Component Did Mount Runs
+
+This is where API call happens:
+
+-   `componentDidMount()` executed after DOM is loaded
+-   API request is sent
+-   Once API response arrives:
+
+```js
+this.setState({ userInfo: data });
+```
+
+## Important Insight
+
+React does not wait for API response before showing UI.
+
+It:
+
+-   Renders immediately with default values
+-   Then fetches data
+-   Then updates UI
+
+This allows:
+
+-   Faster initial load
+-   Better user experience
+-   Possibility of shimmer / loading UI
+
+## Updating Phase (After API Data)
+
+-   What Triggers Update Cycle?
+
+Calling:
+
+```js
+this.setState();
+```
+
+starts **Updating Phase**
+
+### 1. State Changes
+
+-   Data is updated from API
+-   React detects "change in state"
+
+### 2. Render Runs Again
+
+-   Render is called second time
+-   Now UI uses new API data
+-   Reconciliation happens
+-   Virtual DOM calculates difference
+
+### 3. DOM Updates
+
+-   React updates only changed elements:
+
+    -   name
+    -   image
+    -   location
+
+![](./Screenshots/3.jpeg)
+
+### 4. componentDidUpdate Runs
+
+A new lifecycle method exists:
+
+```js
+componentDidUpdate();
+```
+
+Runs:
+
+-   After render completes
+-   After DOM updates
+
+# Full Lifecycle Flow
+
+### Mounting Cycle
+
+```
+Constructor → Render → DOM Update → componentDidMount() → API Call → setState()
+```
+
+### Update Cycle
+
+```
+setState() → render() → DOM Update → componentDidUpdate()
+```
+
+## Unmounting Phase
+
+### What Is Unmounting?
+
+Unmount = component disappearing from screen
+
+Example:
+
+-   Navigating from "About" page to "Contact" page
+-   Component removed from DOM
+
+### Lifecycle Method for Unmounting
+
+```js
+componentWillUnmount();
+```
+
+Runs:
+
+-   Just before component is removed
+-   Used for:
+
+    -   Cleanup
+    -   Cancel timers
+    -   Abort requests
+    -   Remove event listeners
+
+## Overall Lifecycle
+
+| Phase      | Key Methods                            |
+| ---------- | -------------------------------------- |
+| Mounting   | constructor, render, componentDidMount |
+| Updating   | render, componentDidUpdate             |
+| Unmounting | componentWillUnmount                   |
+
+### Important Notes
+
+-   `constructor` runs only once per mount
+-   `render` can run multiple times
+-   `componentDidMount` runs once per mount
+-   `componentDidUpdate` runs on every update
+-   `componentWillUnmount` runs once per mount
+
+# Old Class Components vs Modern React
+
+Earlier:
+
+-   We manually handled:
+
+    -   constructor
+    -   render
+    -   componentDidMount
+    -   componentDidUpdate
+    -   componentWillUnmount
+
+Now:
+
+-   We use:
+
+```js
+useEffect();
+```
+
+Which handles:
+
+-   mounting
+-   updating
+-   unmounting
+
+Cleaner and simpler.
+
+## Important Rule
+
+> Never compare React lifecycle methods with `useEffect`.
+
+-   While the React's official documentation finds equivalence in them:
+    > Go to "Note":  
+    > [componentDidMount() - Caveats](https://react.dev/reference/react/Component#componentdidmount-caveats)
+-   But there is a major difference in how they work.
+
+Class Components and Functional Components:
+
+-   Work differently
+-   Are designed with different mental models
+-   Have different execution flows
+
+NOTE: `useEffect` does not use `componentDidMount` behind the scenes.
+
+# Diving Deep
+
+## Life Cycle Methods of Class Component
+
+In class components:
+
+-   First render → `componentDidMount`
+-   Every subsequent render → `componentDidUpdate`
+
+There is a **difference** between:
+
+-   mount
+-   update
+-   unmount
+
+## Dependency Array
+
+### Why Is It an Array?
+
+Because earlier in class components:
+
+Code looked like this:
+
+```js
+componentDidUpdate(prevProps, prevState) {
+   if (this.state.count !== prevState.count) {
+       // do something
+   }
+}
+```
+
+And if two variables existed:
+
+```js
+if (
+    this.state.count !== prevState.count ||
+    this.state.count2 !== prevState.count2
+) {
+    // do something
+}
+```
+
+This was:
+
+-   Ugly
+-   Error-prone
+-   Hard to scale
+
+## Hooks Design Fix
+
+React team designed:
+
+```js
+useEffect(() => {}, [count, count2]);
+```
+
+Now:
+
+-   No if statement
+-   No prevState
+-   No verbosity
+-   React handles equality checking
+
+Since we can have more than one dependency, the dependencies are provided in an array.
+
+## Multiple useEffects
+
+### Example
+
+If we want:
+
+-   One effect for `count`
+-   Another effect for `count2`
+
+We write:
+
+```js
+useEffect(() => {
+    // uses count
+}, [count]);
+
+useEffect(() => {
+    // uses count2
+}, [count2]);
+```
+
+Earlier:
+
+Class components would require:
+
+```js
+if (this.state.count !== prevState.count) { ... }
+if (this.state.count2 !== prevState.count2) { ... }
+```
+
+# Unmounting
+
+## What Is Unmounting?
+
+Unmounting happens when:
+
+-   Component disappears from screen
+-   Example:
+
+    -   About page → Contact page
+    -   Home → About
+
+## Dangerous Problem In SPA (Single Page Application)
+
+### Example: setInterval in componentDidMount
+
+Class Component Code:
+
+```js
+componentDidMount() {
+   setInterval(() => {
+       console.log("Hello World")
+   }, 1000)
+}
+```
+
+### What Actually Happens
+
+Load About page:
+
+-   Interval starts
+
+Switch to Home page:
+
+-   Interval still running
+
+Go back to About page:
+
+-   Another interval starts
+
+Now:
+
+-   2 intervals
+-   Both running
+-   Console logs twice per second
+
+Repeat again:
+
+-   3 intervals
+-   Memory leak
+-   Performance drain
+-   Invisible bug
+
+## Why This Happens
+
+Because:
+
+-   SPA does not reload the page
+-   JavaScript keeps running
+-   Old timers remain in memory
+-   We never cleaned them
+
+## Fixing the Interval
+
+### Correct Way in Class Component
+
+```js
+componentDidMount() {
+   this.timer = setInterval(...)
+}
+
+componentWillUnmount() {
+   clearInterval(this.timer)
+}
+```
+
+### Why `this.timer`?
+
+Because:
+
+-   `this` is shared across class methods
+-   We can reference the value later
+
+Now:
+
+-   Interval starts when page loads
+-   Interval stops when page changes
+-   Memory is safe
+
+## What About Functional Components?
+
+### If We Write:
+
+```js
+useEffect(() => {
+   setInterval(...)
+})
+```
+
+Then:
+
+-   Interval starts
+-   But never clears
+-   Memory leak remains
+
+### Solution: Cleanup Function
+
+In hooks:
+
+```js
+useEffect(() => {
+   const timer = setInterval(...)
+   return () => {
+      clearInterval(timer)
+   }
+})
+```
+
+-   The function returned from useEffect hook is called after the component is unmounted.
+
+### Example
+
+Insert logs:
+
+```js
+const User = ({ name }) => {
+    useEffect(() => {
+        console.log("useEffect");
+
+        return () => {
+            console.log("useEffect return");
+        };
+    });
+
+    console.log("render");
+
+    const [count, setCount] = useState(0);
+    const [count2, setCount2] = useState(1);
+
+    return (
+        <div className="flex-container user-card">
+            <h2>{name}</h2>
+            <h3>Jaipur, Rajasthan</h3>
+            <p>sansita@gmail.com</p>
+            <p>Count: {count}</p>
+            <p>Count2: {count2}</p>
+        </div>
+    );
+};
+```
+
+Result:
+
+```
+render
+useEffect
+(useEffect cleanup runs when leaving page)
+```
+
+## Notes
+
+**Why do we write super(props) in a React class constructor?**
+
+-   In JavaScript, `super` refers to the constructor of the parent class.
+-   In a React class component, `super(props)` calls the constructor of `React.Component`.
+-   This is necessary because:
+
+    -   It ensures the parent class constructor runs and sets up the component instance correctly.
+    -   It allows `this` to be used inside the constructor.
+
+-   Passing `props` to `super` ensures that `this.props` is available inside the constructor.
+-   Without calling `super(props)`, `this.props` will be undefined in the constructor, and trying to access it will cause an error.
+-   Once `super(props)` is executed, the component can safely use `this.props` and initialize state.
+
+In Short:
+
+-   `super(props)` executes the constructor of `React.Component` (parent class) and sets up `this` for the child class.
+
+**Why can't we have the callback function of useEffect async?**
+
+-   We can’t make the useEffect callback async because React expects that function to return either nothing or a cleanup function - not a Promise.
+-   An async function always returns a Promise, and that breaks React’s expectations.
