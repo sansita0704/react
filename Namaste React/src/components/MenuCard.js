@@ -12,11 +12,11 @@ const MenuCard = ({ resInfo }) => {
     }, []);
 
     return (
-        <div className="menu-card">
-            <div className="item-info">
-                <h3>{name}</h3>
+        <div className="menu-card my-10 grid grid-cols-[2fr_1fr]">
+            <div className="flex flex-col gap-2">
+                <h3 className="text-xl">{name}</h3>
                 <p>₹ {(price || defaultPrice) / 100}</p>
-                <span className="food-rating">
+                <span className="bg-[#079E07] px-1 py-0.5 rounded-md text-white font-bold w-fit">
                     {ratings?.aggregatedRating?.rating}
                     <i
                         className="bi bi-star-fill"
@@ -24,7 +24,7 @@ const MenuCard = ({ resInfo }) => {
                     ></i>
                 </span>
                 {description ? (
-                    <p className="item-desc">
+                    <p className="text-[#666565]">
                         {showComplete
                             ? description
                             : description?.slice(0, 200) + "... "}
@@ -39,12 +39,17 @@ const MenuCard = ({ resInfo }) => {
                         )}
                     </p>
                 ) : (
-                    <p className="item-desc">Description not available.</p>
+                    <p className="text-[#666565]">Description not available.</p>
                 )}
             </div>
-            <div className="flex-container menu-card-actions">
-                <img src={MENU_ITEM_IMG_BASE_URL + imageId}></img>
-                <button className="btn-add">ADD</button>
+            <div className="flex flex-col items-center justify-self-end">
+                <img
+                    className="rounded-2xl"
+                    src={MENU_ITEM_IMG_BASE_URL + imageId}
+                ></img>
+                <button className="bg-white text-[#086b08] font-extrabold text-xl border border-[#D3D2D2] rounded-lg px-10 py-1 translate-y-[-50%] w-fit cursor-pointer hover:shadow-sm transition duration-300">
+                    ADD
+                </button>
             </div>
         </div>
     );

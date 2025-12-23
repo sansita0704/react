@@ -8,42 +8,41 @@ const Header = () => {
     const onlineStatus = useOnlineStatus();
 
     return (
-        <div className="header">
+        <div className="header flex bg-[#F5780B] w-full px-12 py-4 justify-between items-center">
             <div className="logo-container">
-                <img className="logo-image" src={logo}></img>
+                <img className="logo-image w-15 rounded-full" src={logo}></img>
             </div>
             <div className="nav-items">
-                <ul className="nav-items-list">
-                    <li className="nav-list-item">
+                <ul className="flex gap-7 font-bold text-xl text-white items-center">
+                    <li className="text-sm">
                         <i
                             className={
                                 onlineStatus
-                                    ? "bi bi-circle-fill green-dot"
-                                    : "bi bi-circle-fill red-dot"
+                                    ? "bi bi-circle-fill text-green-500"
+                                    : "bi bi-circle-fill text-red-500"
                             }
                         ></i>
                     </li>
-                    <li className="nav-list-item">
+                    <li>
                         <Link to={"/"}>Home</Link>
                     </li>
-                    <li className="nav-list-item">
+                    <li>
                         <Link to={"/about"}>About Us</Link>
                     </li>
-                    <li className="nav-list-item">
+                    <li>
                         <Link to={"/contact"}>Contact Us</Link>
                     </li>
-                    <li className="nav-list-item">
+                    <li>
                         <Link to={"/grocery"}>Grocery</Link>
                     </li>
-                    <li
-                        className="nav-list-item"
+                    <li className="cursor-pointer"
                         onClick={() => {
                             setIsLogin(!isLogin);
                         }}
                     >
                         {isLogin ? "Logout" : "Login"}
                     </li>
-                    <li className="nav-list-item">
+                    <li className="text-4xl">
                         <i className="bi bi-cart-check cart"></i>
                     </li>
                 </ul>

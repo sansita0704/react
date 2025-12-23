@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
-import Shimmer from "./Shimmer";
+import Shimmer from "./shimmer/HomeShimmer";
 import { Link } from "react-router";
 import { RES_LIST_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -49,18 +49,18 @@ const Body = () => {
     return listOfRestaurants.length === 0 ? (
         <Shimmer />
     ) : (
-        <div className="body">
-            <div className="flex-container filter">
-                <div className="search-container">
+        <div className="body font-[poppins]">
+            <div className="flex justify-around items-center px-20 py-8 filter">
+                <div className="search-container flex justify-between border-[1.5] border-[#D3D2D2] transition duration-300 ease-in hover:border-[#F5780B] focus-within:border-[#F5780B] rounded-4xl px-6 py-2 w-[80%] text-xl outline-0">
                     <input
                         type="text"
-                        className="search-bar"
+                        className="border-0 outline-0 w-full"
                         placeholder="Search for restaurants"
                         value={searchText}
                         onChange={(event) => setSearchText(event.target.value)}
                     ></input>
                     <button
-                        className="search-btn"
+                        className="search-btn text-xl cursor-pointer transition duration-200 ease-in hover:text-[#F5780B]"
                         onClick={() => {
                             const filteredList = listOfRestaurants.filter(
                                 (item) =>
@@ -81,22 +81,26 @@ const Body = () => {
                     </button>
                 </div>
                 <button
-                    className="top-rated"
+                    className="border-[1.5] border-[#D3D2D2] rounded-4xl text-sm px-5 py-2 cursor-pointer transition duration-300 ease-in hover:border-[#F5780B] focus:border-[#F5780B]"
                     onClick={() => {
                         const filteredList = filteredRestaurants.filter(
                             (item) => item.info.avgRating > 4
                         );
 
-                        setFilteredRestaurants(filteredList);
+                        if (filteredList.length === 0) setNoRestaurants(true);
+                        else {
+                            setNoRestaurants(false);
+                            setFilteredRestaurants(filteredList);
+                        }
                     }}
                 >
                     Top Rated Restaurants
                 </button>
             </div>
             {noRestaurants ? (
-                <p className="msg">No Restaurants Found!</p>
+                <p className="text-xl text-center">No Restaurants Found!</p>
             ) : (
-                <div className="restaurant-container">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 px-15 py-10 pt-0">
                     {filteredRestaurants.map((restaurant) => (
                         <Link
                             to={"/restaurants/" + restaurant.info.id}
