@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 const logo = new URL("../assets/logo.jpeg", import.meta.url);
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
     const [isLogin, setIsLogin] = useState(false);
     const onlineStatus = useOnlineStatus();
+    const data = useContext(UserContext);
 
     return (
         <div className="header flex bg-[#F5780B] w-full px-12 py-4 justify-between items-center">
@@ -35,13 +37,15 @@ const Header = () => {
                     <li>
                         <Link to={"/grocery"}>Grocery</Link>
                     </li>
-                    <li className="cursor-pointer"
+                    <li
+                        className="cursor-pointer"
                         onClick={() => {
                             setIsLogin(!isLogin);
                         }}
                     >
                         {isLogin ? "Logout" : "Login"}
                     </li>
+                    <li>{data.loggedInUser}</li>
                     <li className="text-4xl">
                         <i className="bi bi-cart-check cart"></i>
                     </li>

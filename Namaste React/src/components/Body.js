@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import { useContext, useEffect, useState } from "react";
+import RestaurantCard, { withOpenLabel } from "./RestaurantCard";
 import Shimmer from "./shimmer/HomeShimmer";
 import { Link } from "react-router";
 import { RES_LIST_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [noRestaurants, setNoRestaurants] = useState(false);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const { loggedInUser, setUserName } = useContext(UserContext);
 
     console.log("Body Rendered");
+
+    const RestaurantCardOpen = withOpenLabel(RestaurantCard);
 
     useEffect(() => {
         fetchData();
@@ -50,8 +54,8 @@ const Body = () => {
         <Shimmer />
     ) : (
         <div className="body font-[poppins]">
-            <div className="flex justify-around items-center px-20 py-8 filter">
-                <div className="search-container flex justify-between border-[1.5] border-[#D3D2D2] transition duration-300 ease-in hover:border-[#F5780B] focus-within:border-[#F5780B] rounded-4xl px-6 py-2 w-[80%] text-xl outline-0">
+            <div className="flex justify-around items-center px-20 py-8 gap-2">
+                <div className="search-container flex justify-between border-[1.5] border-[#D3D2D2] transition duration-300 ease-in hover:border-[#F5780B] focus-within:border-[#F5780B] rounded-4xl px-6 py-2 w-[65%] text-xl outline-0">
                     <input
                         type="text"
                         className="border-0 outline-0 w-full"
@@ -96,6 +100,12 @@ const Body = () => {
                 >
                     Top Rated Restaurants
                 </button>
+                <input
+                    className="border-[1.5] border-[#D3D2D2] rounded-4xl text-sm px-5 py-2 transition duration-300 ease-in outline-0 hover:border-[#F5780B] focus:border-[#F5780B]"
+                    placeholder="Enter Username"
+                    value={loggedInUser}
+                    onChange={(e) => setUserName(e.target.value)}
+                ></input>
             </div>
             {noRestaurants ? (
                 <p className="text-xl text-center">No Restaurants Found!</p>
@@ -103,10 +113,17 @@ const Body = () => {
                 <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 px-15 py-10 pt-0">
                     {filteredRestaurants.map((restaurant) => (
                         <Link
+                            className="transition duration-200 ease-in hover:scale-101"
                             to={"/restaurants/" + restaurant.info.id}
                             key={restaurant.info.id}
                         >
-                            <RestaurantCard restaurantData={restaurant} />
+                            {restaurant.info.isOpen ? (
+                                <RestaurantCardOpen
+                                    restaurantData={restaurant}
+                                />
+                            ) : (
+                                <RestaurantCard restaurantData={restaurant} />
+                            )}
                         </Link>
                     ))}
                 </div>

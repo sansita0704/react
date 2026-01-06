@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MENU_API } from "../utils/constants";
 
 const useRestaurantMenu = (resId) => {
-    const [menuItems, setMenuItems] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [resInfo, setResInfo] = useState({});
 
     useEffect(() => {
@@ -12,48 +12,29 @@ const useRestaurantMenu = (resId) => {
     const fetchData = async () => {
         const response = await fetch(MENU_API + resId);
         const data = await response.json();
-
-        let arr = [];
+        console.log("DATA: ", data);
 
         // Menu Items
         // 1. Get data from API
-        arr = data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR.cards;
+        let cards =
+            data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR.cards;
 
-        // 2. Filter and extract itemCards from the data
-        arr = arr
-            ?.filter((item, index) => index != 0 && index != 1)
-            ?.map((item, index) => item?.card?.card?.itemCards)
-            ?.filter(Boolean) // removes undefined/null/false
-            ?.flat();
+        // 2. Filter cards
+        cards = cards.filter(
+            (item) =>
+                item.card?.card?.["@type"] ===
+                "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+        );
 
-        // arr: array of arrays -> so we do .flat() to convert it to a 1d arr
-        /*
-        [
-            [itemCard1, itemCard2, ...],
-            [itemCard3, itemCard4, ...],
-            ...
-        ]
-        */
+        console.log("CARDS: ", cards);
 
-        // 3. Remove Duplicates
-        let uniqueMenuItems = [];
-
-        arr.forEach((item) => {
-            if (
-                !uniqueMenuItems.find(
-                    (x) => x?.card?.info?.id === item?.card?.info?.id
-                )
-            )
-                uniqueMenuItems.push(item);
-        });
-
-        setMenuItems(uniqueMenuItems);
+        setCategories(cards);
 
         // Restaurant Info
         setResInfo(data?.data?.cards[2]?.card?.card?.info);
     };
 
-    return [menuItems, resInfo];
+    return [categories, resInfo];
 };
 
 export default useRestaurantMenu;

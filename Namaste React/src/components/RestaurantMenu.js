@@ -1,17 +1,17 @@
-import MenuCard from "./MenuCard";
-import Shimmer from "./shimmer/HomeShimmer";
+import MenuCategory from "./MenuCategory";
 import { useParams } from "react-router";
 import { RES_IMG_BASE_URL } from "../utils/constants";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import MenuPageShimmer from "./shimmer/MenuPageShimmer";
+import { useState } from "react";
 
 const RestaurantMenu = () => {
     const { resId } = useParams();
 
-    const [menuItems, resInfo] = useRestaurantMenu(resId);
+    const [categories, resInfo] = useRestaurantMenu(resId);
+    const [showIndex, setShowIndex] = useState(0);
 
-    if (menuItems.length == 0)
-    return <MenuPageShimmer />;
+    if (categories.length == 0) return <MenuPageShimmer />;
 
     const {
         name,
@@ -50,17 +50,17 @@ const RestaurantMenu = () => {
                 </div>
             </div>
 
-            <div className="menu-body px-70 py-15">
-                <h2 className="text-3xl font-bold">Recommended</h2>
-                <p>
-                    {menuItems.length +
-                        (menuItems.length == 1 ? " Item" : " Items")}
-                </p>
-
-                {menuItems.map((item) => (
-                    <MenuCard
-                        key={item.card.info.id}
-                        resInfo={item.card.info}
+            <div className="menu-body px-65 py-5">
+                {categories.map((category, index) => (
+                    <MenuCategory
+                        key={category.card.card.categoryId}
+                        categoryData={category.card.card}
+                        showItems={index == showIndex && true}
+                        setShowIndex={() =>
+                            index == showIndex
+                                ? setShowIndex(-1)
+                                : setShowIndex(index)
+                        }
                     />
                 ))}
             </div>

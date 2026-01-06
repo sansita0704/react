@@ -9,7 +9,7 @@ const User = ({ name }) => {
         };
     });
 
-    console.log("render");
+    // console.log("render");
 
     const [count, setCount] = useState(0);
     const [count2, setCount2] = useState(1);

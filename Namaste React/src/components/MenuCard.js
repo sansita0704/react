@@ -12,9 +12,9 @@ const MenuCard = ({ resInfo }) => {
     }, []);
 
     return (
-        <div className="menu-card my-10 grid grid-cols-[2fr_1fr]">
+        <div className="menu-card mt-12 grid grid-cols-[2fr_1fr] border-b border-gray-300 last:border-b-0">
             <div className="flex flex-col gap-2">
-                <h3 className="text-xl">{name}</h3>
+                <h3 className="text-xl font-semibold">{name}</h3>
                 <p>₹ {(price || defaultPrice) / 100}</p>
                 <span className="bg-[#079E07] px-1 py-0.5 rounded-md text-white font-bold w-fit">
                     {ratings?.aggregatedRating?.rating}
@@ -31,7 +31,7 @@ const MenuCard = ({ resInfo }) => {
 
                         {!showComplete && (
                             <button
-                                className="btn-show-more"
+                                className="btn-show-more cursor-pointer"
                                 onClick={() => setShowComplete(true)}
                             >
                                 more
@@ -44,7 +44,7 @@ const MenuCard = ({ resInfo }) => {
             </div>
             <div className="flex flex-col items-center justify-self-end">
                 <img
-                    className="rounded-2xl"
+                    className="rounded-2xl shadow-sm"
                     src={MENU_ITEM_IMG_BASE_URL + imageId}
                 ></img>
                 <button className="bg-white text-[#086b08] font-extrabold text-xl border border-[#D3D2D2] rounded-lg px-10 py-1 translate-y-[-50%] w-fit cursor-pointer hover:shadow-sm transition duration-300">

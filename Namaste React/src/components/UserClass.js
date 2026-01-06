@@ -20,7 +20,7 @@ class UserClass extends React.Component {
         );
         const data = await response.json();
 
-        console.log(data);
+        // console.log(data);
         this.setState({ userInfo: data });
     }
 

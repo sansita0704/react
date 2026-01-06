@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { RES_IMG_BASE_URL } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 const RestaurantCard = ({ restaurantData }) => {
     const { cloudinaryImageId, name, cuisines, avgRating, costForTwo } =
         restaurantData.info;
     const { deliveryTime } = restaurantData.info.sla;
+    const userData = useContext(UserContext);
 
     return (
-        <div className="restaurant-card rounded-2xl transition duration-200 ease-in hover:scale-101 hover:shadow-sm overflow-hidden h-full text-sm border border-[#D3D2D2]">
+        <div className="restaurant-card rounded-2xl transition duration-200 ease-in hover:shadow-sm overflow-hidden h-full text-sm border border-[#D3D2D2]">
             <div className="aspect-5/3">
                 <img
                     className="w-full h-full object-cover"
@@ -44,6 +47,19 @@ const RestaurantCard = ({ restaurantData }) => {
             </div>
         </div>
     );
+};
+
+export const withOpenLabel = (RestaurantCard) => {
+    return (props) => {
+        return (
+            <div>
+                <label className="bg-black text-white p-1.5 font-semibold absolute rounded-tl-xl rounded-br-xl border-t border-l border-[#D3D2D2] z-1">
+                    Open
+                </label>
+                <RestaurantCard {...props} />
+            </div>
+        );
+    };
 };
 
 export default RestaurantCard;
