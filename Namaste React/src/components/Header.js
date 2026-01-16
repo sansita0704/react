@@ -3,11 +3,15 @@ const logo = new URL("../assets/logo.jpeg", import.meta.url);
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
     const [isLogin, setIsLogin] = useState(false);
     const onlineStatus = useOnlineStatus();
     const data = useContext(UserContext);
+
+    const cartItems = useSelector((store) => store.cart.items);
+    // console.log(cartItems);
 
     return (
         <div className="header flex bg-[#F5780B] w-full px-12 py-4 justify-between items-center">
@@ -46,8 +50,13 @@ const Header = () => {
                         {isLogin ? "Logout" : "Login"}
                     </li>
                     <li>{data.loggedInUser}</li>
-                    <li className="text-4xl">
-                        <i className="bi bi-cart-check cart"></i>
+                    <li>
+                        <Link to={"/cart"} className="flex items-center gap-1">
+                            <i className="bi bi-cart-check cart text-4xl"></i>
+                            <span className="text-lg">{`${cartItems.length} ${
+                                cartItems.length < 2 ? "Item" : "Items"
+                            }`}</span>
+                        </Link>
                     </li>
                 </ul>
             </div>

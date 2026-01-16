@@ -38,6 +38,7 @@ const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
                         <MenuCard
                             key={item.card.info.id}
                             resInfo={item.card.info}
+                            btnText={"Add"}
                         />
                     ))}
                 </div>

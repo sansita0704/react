@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { MENU_ITEM_IMG_BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
-const MenuCard = ({ resInfo }) => {
+const MenuCard = ({ resInfo, btnText }) => {
     const [showComplete, setShowComplete] = useState(false);
 
     const { name, description, imageId, price, defaultPrice, ratings } =
@@ -10,6 +12,13 @@ const MenuCard = ({ resInfo }) => {
     useEffect(() => {
         if (description?.length < 200) setShowComplete(true);
     }, []);
+
+    const dispatch = useDispatch();
+
+    const handleAddItem = (e) => {
+        // Dispatch an action:
+        dispatch(addItem(resInfo));
+    };
 
     return (
         <div className="menu-card mt-12 grid grid-cols-[2fr_1fr] border-b border-gray-300 last:border-b-0">
@@ -47,8 +56,11 @@ const MenuCard = ({ resInfo }) => {
                     className="rounded-2xl shadow-sm"
                     src={MENU_ITEM_IMG_BASE_URL + imageId}
                 ></img>
-                <button className="bg-white text-[#086b08] font-extrabold text-xl border border-[#D3D2D2] rounded-lg px-10 py-1 translate-y-[-50%] w-fit cursor-pointer hover:shadow-sm transition duration-300">
-                    ADD
+                <button
+                    className="bg-white text-[#086b08] font-extrabold text-lg border border-[#D3D2D2] rounded-lg px-10 py-1 translate-y-[-50%] w-fit cursor-pointer hover:shadow-sm transition duration-300 uppercase"
+                    onClick={handleAddItem}
+                >
+                    {btnText}
                 </button>
             </div>
         </div>
