@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MENU_ITEM_IMG_BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { addItem } from "../utils/cartSlice";
+import { addItem, removeItem } from "../utils/cartSlice";
 
 const MenuCard = ({ resInfo, btnText }) => {
     const [showComplete, setShowComplete] = useState(false);
@@ -15,9 +15,10 @@ const MenuCard = ({ resInfo, btnText }) => {
 
     const dispatch = useDispatch();
 
-    const handleAddItem = (e) => {
+    const handleClick = () => {
         // Dispatch an action:
-        dispatch(addItem(resInfo));
+        if (btnText == "add") dispatch(addItem(resInfo));
+        else dispatch(removeItem(resInfo.id));
     };
 
     return (
@@ -32,11 +33,11 @@ const MenuCard = ({ resInfo, btnText }) => {
                         style={{ marginLeft: "0.2rem" }}
                     ></i>
                 </span>
-                {description ? (
+                {description ?
                     <p className="text-[#666565]">
-                        {showComplete
-                            ? description
-                            : description?.slice(0, 200) + "... "}
+                        {showComplete ?
+                            description
+                        :   description?.slice(0, 200) + "... "}
 
                         {!showComplete && (
                             <button
@@ -47,9 +48,8 @@ const MenuCard = ({ resInfo, btnText }) => {
                             </button>
                         )}
                     </p>
-                ) : (
-                    <p className="text-[#666565]">Description not available.</p>
-                )}
+                :   <p className="text-[#666565]">Description not available.</p>
+                }
             </div>
             <div className="flex flex-col items-center justify-self-end">
                 <img
@@ -58,7 +58,7 @@ const MenuCard = ({ resInfo, btnText }) => {
                 ></img>
                 <button
                     className="bg-white text-[#086b08] font-extrabold text-lg border border-[#D3D2D2] rounded-lg px-10 py-1 translate-y-[-50%] w-fit cursor-pointer hover:shadow-sm transition duration-300 uppercase"
-                    onClick={handleAddItem}
+                    onClick={handleClick}
                 >
                     {btnText}
                 </button>

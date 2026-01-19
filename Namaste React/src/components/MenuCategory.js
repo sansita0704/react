@@ -28,9 +28,9 @@ const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
             {/* Collapsible Content: Rendered always but max height and opacity is 0 if showItems is true. */}
             <div
                 className={`grid transition-all ease-in-out duration-700 ${
-                    showItems
-                        ? "grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0"
+                    showItems ?
+                        "grid-rows-[1fr] opacity-100"
+                    :   "grid-rows-[0fr] opacity-0"
                 }`}
             >
                 <div className="overflow-hidden">
@@ -38,7 +38,7 @@ const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
                         <MenuCard
                             key={item.card.info.id}
                             resInfo={item.card.info}
-                            btnText={"Add"}
+                            btnText={"add"}
                         />
                     ))}
                 </div>
