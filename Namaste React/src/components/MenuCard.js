@@ -22,7 +22,10 @@ const MenuCard = ({ resInfo, btnText }) => {
     };
 
     return (
-        <div className="menu-card mt-12 grid grid-cols-[2fr_1fr] border-b border-gray-300 last:border-b-0">
+        <div
+            data-testid="cartItems"
+            className="menu-card mt-12 grid grid-cols-[2fr_1fr] border-b border-gray-300 last:border-b-0"
+        >
             <div className="flex flex-col gap-2">
                 <h3 className="text-xl font-semibold">{name}</h3>
                 <p>₹ {(price || defaultPrice) / 100}</p>
@@ -59,6 +62,7 @@ const MenuCard = ({ resInfo, btnText }) => {
                 <button
                     className="bg-white text-[#086b08] font-extrabold text-lg border border-[#D3D2D2] rounded-lg px-10 py-1 translate-y-[-50%] w-fit cursor-pointer hover:shadow-sm transition duration-300 uppercase"
                     onClick={handleClick}
+                    data-testid="addBtn"
                 >
                     {btnText}
                 </button>

@@ -57,9 +57,9 @@ const RestaurantMenu = () => {
                         categoryData={category.card.card}
                         showItems={index == showIndex && true}
                         setShowIndex={() =>
-                            index == showIndex
-                                ? setShowIndex(-1)
-                                : setShowIndex(index)
+                            index == showIndex ?
+                                setShowIndex(-1)
+                            :   setShowIndex(index)
                         }
                     />
                 ))}

@@ -8,8 +8,6 @@ const Cart = () => {
     const dispatch = useDispatch();
     const handleClearCart = () => dispatch(clearCart());
 
-    const handleClick = () => dispatch()
-
     return (
         <div>
             <div className="flex items-center justify-center mt-8">

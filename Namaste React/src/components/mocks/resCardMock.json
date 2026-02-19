@@ -1,0 +1,75 @@
+{
+    "info": {
+        "id": "72605",
+        "name": "Pizza Hut",
+        "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2025/9/1/3e0611f1-2572-464f-baca-c3dcf3edc750_72605.JPG",
+        "locality": "Tribhuvan Complex",
+        "areaName": "Athwa",
+        "costForTwo": "₹350 for two",
+        "cuisines": ["Pizzas"],
+        "avgRating": 4.3,
+        "parentId": "721",
+        "avgRatingString": "4.3",
+        "totalRatingsString": "9.3K+",
+        "sla": {
+            "deliveryTime": 30,
+            "lastMileTravel": 5,
+            "serviceability": "SERVICEABLE",
+            "slaString": "30-35 mins",
+            "lastMileTravelString": "5.0 km",
+            "iconType": "ICON_TYPE_EMPTY"
+        },
+        "availability": {
+            "nextCloseTime": "2025-10-25 23:00:00",
+            "opened": true
+        },
+        "badges": {
+            "imageBadges": [
+                {
+                    "imageId": "Rxawards/_CATEGORY-Pizza.png",
+                    "description": "Delivery!"
+                }
+            ]
+        },
+        "isOpen": true,
+        "type": "F",
+        "badgesV2": {
+            "entityBadges": {
+                "imageBased": {
+                    "badgeObject": [
+                        {
+                            "attributes": {
+                                "description": "Delivery!",
+                                "imageId": "Rxawards/_CATEGORY-Pizza.png"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "aggregatedDiscountInfoV3": {
+            "header": "ITEMS",
+            "subHeader": "AT ₹99"
+        },
+        "differentiatedUi": {
+            "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT"
+        },
+        "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
+        "externalRatings": {
+            "aggregatedRating": {
+                "rating": "4.2",
+                "ratingCount": "4.4K+"
+            },
+            "source": "GOOGLE",
+            "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
+        },
+        "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
+    },
+    "analytics": {
+        "context": "seo-data-43bca6b8-5039-46da-935e-cdde9f114a4e"
+    },
+    "cta": {
+        "link": "https://www.swiggy.com/city/surat/pizza-hut-tribhuvan-complex-athwa-rest72605",
+        "type": "WEBLINK"
+    }
+}

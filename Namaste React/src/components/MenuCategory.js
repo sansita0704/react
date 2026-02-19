@@ -9,7 +9,7 @@ const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
     };
 
     return (
-        <div className="px-5 py-4 my-5 bg-gray-50 rounded-4xl shadow-md">
+        <div data-testid="menuCategory" className="px-5 py-4 my-5 bg-gray-50 rounded-4xl shadow-md">
             <div
                 className="flex justify-between cursor-pointer"
                 onClick={handleClick}

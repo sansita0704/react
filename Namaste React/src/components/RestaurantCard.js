@@ -9,7 +9,7 @@ const RestaurantCard = ({ restaurantData }) => {
     const userData = useContext(UserContext);
 
     return (
-        <div className="restaurant-card rounded-2xl transition duration-200 ease-in hover:shadow-sm overflow-hidden h-full text-sm border border-[#D3D2D2]">
+        <div data-testid="restaurantCard" className="restaurant-card rounded-2xl transition duration-200 ease-in hover:shadow-sm overflow-hidden h-full text-sm border border-[#D3D2D2]">
             <div className="aspect-5/3">
                 <img
                     className="w-full h-full object-cover"
@@ -23,7 +23,7 @@ const RestaurantCard = ({ restaurantData }) => {
                     {cuisines
                         .slice(0, 3)
                         .map((item, index, arr) =>
-                            index === arr.length - 1 ? item : item + ", "
+                            index === arr.length - 1 ? item : item + ", ",
                         )}
                     {cuisines.length > 3 && "..."}
                 </p>

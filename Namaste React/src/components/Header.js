@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-const logo = new URL("../assets/logo.jpeg", import.meta.url);
+import logo from "url:../assets/logo.jpeg";
 import { Link } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
@@ -11,7 +11,6 @@ const Header = () => {
     const data = useContext(UserContext);
 
     const cartItems = useSelector((store) => store.cart.items);
-    // console.log(cartItems);
 
     return (
         <div className="header flex bg-[#F5780B] w-full px-12 py-4 justify-between items-center">
@@ -23,9 +22,9 @@ const Header = () => {
                     <li className="text-sm">
                         <i
                             className={
-                                onlineStatus
-                                    ? "bi bi-circle-fill text-green-500"
-                                    : "bi bi-circle-fill text-red-500"
+                                onlineStatus ?
+                                    "bi bi-circle-fill text-green-500"
+                                :   "bi bi-circle-fill text-red-500"
                             }
                         ></i>
                     </li>
@@ -41,14 +40,14 @@ const Header = () => {
                     <li>
                         <Link to={"/grocery"}>Grocery</Link>
                     </li>
-                    <li
+                    <button
                         className="cursor-pointer"
                         onClick={() => {
                             setIsLogin(!isLogin);
                         }}
                     >
                         {isLogin ? "Logout" : "Login"}
-                    </li>
+                    </button>
                     <li>{data.loggedInUser}</li>
                     <li>
                         <Link to={"/cart"} className="flex items-center gap-1">
