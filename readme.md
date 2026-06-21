@@ -17,3 +17,7 @@ This repository contains my **React notes and code snippets** from two amazing l
 -   Project setup with Parcel & React architecture basics
 -   API calls, async data, and Shimmer UI
 -   Routing, context API, and state management
+
+##
+
+> Made with ❤️ by [Sansita Jain](mailto:sansita7406@gmail.com)
