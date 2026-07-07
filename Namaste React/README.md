@@ -1,4 +1,4 @@
-# Namaste React
+# Foodify
 
 ![React](https://img.shields.io/badge/React-4FB3D9?style=for-the-badge&logo=react&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-BE3A3F?style=for-the-badge&logo=reactrouter&logoColor=white)
