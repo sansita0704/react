@@ -40,14 +40,16 @@ const Header = () => {
                     <li>
                         <Link to={"/grocery"}>Grocery</Link>
                     </li>
-                    <button
-                        className="cursor-pointer"
-                        onClick={() => {
-                            setIsLogin(!isLogin);
-                        }}
-                    >
-                        {isLogin ? "Logout" : "Login"}
-                    </button>
+                    <li>
+                        <button
+                            className="cursor-pointer"
+                            onClick={() => {
+                                setIsLogin(!isLogin);
+                            }}
+                        >
+                            {isLogin ? "Logout" : "Login"}
+                        </button>
+                    </li>
                     <li>{data.loggedInUser}</li>
                     <li>
                         <Link to={"/cart"} className="flex items-center gap-1">

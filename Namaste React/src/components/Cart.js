@@ -24,7 +24,11 @@ const Cart = () => {
             )}
             <div className="cart-items px-70 py-5">
                 {cartItems.map((item) => (
-                    <MenuCard key={item.id} resInfo={item} btnText={"remove"} />
+                    <MenuCard
+                        key={item.cartItemId}
+                        resInfo={item}
+                        btnText={"remove"}
+                    />
                 ))}
             </div>
         </div>

@@ -7,7 +7,7 @@ const useRestaurantMenu = (resId) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [resId]);
 
     const fetchData = async () => {
         const response = await fetch(MENU_API + resId);
@@ -17,7 +17,8 @@ const useRestaurantMenu = (resId) => {
         // Menu Items
         // 1. Get data from API
         let cards =
-            data?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR.cards;
+            data?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR
+                ?.cards ?? [];
 
         // 2. Filter cards
         cards = cards.filter(
@@ -31,7 +32,7 @@ const useRestaurantMenu = (resId) => {
         setCategories(cards);
 
         // Restaurant Info
-        setResInfo(data?.data?.cards[2]?.card?.card?.info);
+        setResInfo(data?.data?.cards?.[2]?.card?.card?.info ?? {});
     };
 
     return [categories, resInfo];

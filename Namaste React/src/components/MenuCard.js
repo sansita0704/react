@@ -18,7 +18,7 @@ const MenuCard = ({ resInfo, btnText }) => {
     const handleClick = () => {
         // Dispatch an action:
         if (btnText == "add") dispatch(addItem(resInfo));
-        else dispatch(removeItem(resInfo.id));
+        else dispatch(removeItem(resInfo.cartItemId));
     };
 
     return (

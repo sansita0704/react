@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
     name: "cart",
@@ -9,12 +9,16 @@ const cartSlice = createSlice({
         // action: reducer function
 
         addItem: (state, action) => {
-            state.items.push(action.payload);
+            // Each cart entry gets its own id so duplicates of the same
+            // dish stay distinct (used as the React key in Cart).
+            state.items.push({ ...action.payload, cartItemId: nanoid() });
         },
 
         removeItem: (state, action) => {
+            // Payload is the entry's cartItemId, so exactly the
+            // clicked row is removed even when duplicates exist.
             state.items = state.items.filter(
-                (item) => item.id != action.payload,
+                (item) => item.cartItemId != action.payload,
             );
         },
 

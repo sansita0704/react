@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const Grocery = lazy(() => import("./components/Grocery"));
 
 const AppLayout = () => {
-    const [userName, setUserName] = useState();
+    const [userName, setUserName] = useState("");
 
     // Authentication
 

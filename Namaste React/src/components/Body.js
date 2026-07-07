@@ -6,42 +6,62 @@ import { RES_LIST_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 
+const RestaurantCardOpen = withOpenLabel(RestaurantCard);
+
 const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [noRestaurants, setNoRestaurants] = useState(false);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [fetchError, setFetchError] = useState(false);
     const { loggedInUser, setUserName } = useContext(UserContext);
+    const onlineStatus = useOnlineStatus();
 
     // console.log("Body Rendered");
-
-    const RestaurantCardOpen = withOpenLabel(RestaurantCard);
 
     useEffect(() => {
         fetchData();
     }, []);
 
     const fetchData = async () => {
-        const response = await fetch(
-            // "https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.918938&lng=75.7887458&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-            RES_LIST_API,
-        );
-        const data = await response.json();
+        try {
+            const response = await fetch(
+                // "https://proxy.corsfix.com/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.918938&lng=75.7887458&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+                RES_LIST_API,
+            );
+            const data = await response.json();
 
-        setFilteredRestaurants(
-            data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-                ?.restaurants,
-        );
+            const restaurants =
+                data?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
+                    ?.restaurants ?? [];
 
-        setListOfRestaurants(
-            data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-                ?.restaurants,
-        );
+            setFilteredRestaurants(restaurants);
+
+            setListOfRestaurants(restaurants);
+
+            setNoRestaurants(restaurants.length === 0);
+        } catch (error) {
+            console.error("Failed to fetch restaurants: ", error);
+            setFetchError(true);
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    const retryFetch = () => {
+        setFetchError(false);
+        setIsLoading(true);
+        fetchData();
+    };
+
+    // Auto-retry when the connection comes back after a failed fetch.
+    useEffect(() => {
+        if (onlineStatus && fetchError) retryFetch();
+    }, [onlineStatus]);
 
     // if (listOfRestaurants.length === 0) return <Shimmer />;
 
-    const onlineStatus = useOnlineStatus();
     if (!onlineStatus)
         return (
             <h1>
@@ -49,8 +69,23 @@ const Body = () => {
             </h1>
         );
 
+    if (fetchError)
+        return (
+            <div className="flex flex-col items-center gap-5 my-10">
+                <h1 className="text-xl">
+                    Something went wrong while fetching restaurants!
+                </h1>
+                <button
+                    className="border-[1.5] border-[#D3D2D2] rounded-4xl text-sm px-5 py-2 cursor-pointer transition duration-300 ease-in hover:border-[#F5780B]"
+                    onClick={retryFetch}
+                >
+                    Retry
+                </button>
+            </div>
+        );
+
     // Conditional Rendering
-    return listOfRestaurants.length === 0 ?
+    return isLoading ?
             <Shimmer />
         :   <div className="body font-[poppins]">
                 <div className="flex justify-around items-center px-20 py-8 gap-2">
