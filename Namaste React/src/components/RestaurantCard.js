@@ -1,30 +1,43 @@
-import { useContext } from "react";
 import { RES_IMG_BASE_URL } from "../utils/constants";
-import UserContext from "../utils/UserContext";
 
 const RestaurantCard = ({ restaurantData }) => {
-    const { cloudinaryImageId, name, cuisines, avgRating, costForTwo } =
-        restaurantData.info;
+    const {
+        cloudinaryImageId,
+        name,
+        cuisines,
+        avgRating,
+        costForTwo,
+        aggregatedDiscountInfoV3,
+    } = restaurantData.info;
     const { deliveryTime } = restaurantData.info.sla;
-    const userData = useContext(UserContext);
+
+    const offer =
+        aggregatedDiscountInfoV3 &&
+        [aggregatedDiscountInfoV3.header, aggregatedDiscountInfoV3.subHeader]
+            .filter(Boolean)
+            .join(" ");
 
     return (
         <div data-testid="restaurantCard" className="restaurant-card rounded-2xl transition duration-200 ease-in hover:shadow-sm overflow-hidden h-full text-sm border border-[#D3D2D2]">
-            <div className="aspect-5/3">
+            <div className="aspect-5/3 relative">
                 <img
                     className="w-full h-full object-cover"
                     src={RES_IMG_BASE_URL + cloudinaryImageId}
+                    alt={name}
                 ></img>
+                {offer && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2 pt-8">
+                        <span className="text-white font-extrabold text-lg uppercase tracking-wide">
+                            {offer}
+                        </span>
+                    </div>
+                )}
             </div>
 
             <div className="card-content flex flex-col px-8 py-6 gap-3 rounded-b-2xl">
                 <h3 className="text-xl font-bold">{name}</h3>
                 <p>
-                    {cuisines
-                        .slice(0, 3)
-                        .map((item, index, arr) =>
-                            index === arr.length - 1 ? item : item + ", ",
-                        )}
+                    {cuisines.slice(0, 3).join(", ")}
                     {cuisines.length > 3 && "..."}
                 </p>
                 <div className="flex justify-between">

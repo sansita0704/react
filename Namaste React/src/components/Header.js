@@ -1,21 +1,30 @@
 import { useState, useContext } from "react";
 import logo from "url:../assets/logo.jpeg";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import { selectCartCount } from "../utils/cartSlice";
+
+// Underline the link of the page the user is currently on.
+const navLinkClass = ({ isActive }) =>
+    isActive ? "underline underline-offset-4" : undefined;
 
 const Header = () => {
     const [isLogin, setIsLogin] = useState(false);
     const onlineStatus = useOnlineStatus();
     const data = useContext(UserContext);
 
-    const cartItems = useSelector((store) => store.cart.items);
+    const cartCount = useSelector(selectCartCount);
 
     return (
         <div className="header flex bg-[#F5780B] w-full px-12 py-4 justify-between items-center">
             <div className="logo-container">
-                <img className="logo-image w-15 rounded-full" src={logo}></img>
+                <img
+                    className="logo-image w-15 rounded-full"
+                    src={logo}
+                    alt="Foodify logo"
+                ></img>
             </div>
             <div className="nav-items">
                 <ul className="flex gap-7 font-bold text-xl text-white items-center">
@@ -29,16 +38,24 @@ const Header = () => {
                         ></i>
                     </li>
                     <li>
-                        <Link to={"/"}>Home</Link>
+                        <NavLink to={"/"} end className={navLinkClass}>
+                            Home
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={"/about"}>About Us</Link>
+                        <NavLink to={"/about"} className={navLinkClass}>
+                            About Us
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={"/contact"}>Contact Us</Link>
+                        <NavLink to={"/contact"} className={navLinkClass}>
+                            Contact Us
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to={"/grocery"}>Grocery</Link>
+                        <NavLink to={"/grocery"} className={navLinkClass}>
+                            Grocery
+                        </NavLink>
                     </li>
                     <li>
                         <button
@@ -52,12 +69,21 @@ const Header = () => {
                     </li>
                     <li>{data.loggedInUser}</li>
                     <li>
-                        <Link to={"/cart"} className="flex items-center gap-1">
+                        <NavLink
+                            to={"/cart"}
+                            className={({ isActive }) =>
+                                `flex items-center gap-1 ${
+                                    isActive ?
+                                        "underline underline-offset-4"
+                                    :   ""
+                                }`
+                            }
+                        >
                             <i className="bi bi-cart-check cart text-4xl"></i>
-                            <span className="text-lg">{`${cartItems.length} ${
-                                cartItems.length < 2 ? "Item" : "Items"
+                            <span className="text-lg">{`${cartCount} ${
+                                cartCount < 2 ? "Item" : "Items"
                             }`}</span>
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
             </div>

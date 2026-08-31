@@ -6,16 +6,20 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-2FA8C7?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-A33A46?style=for-the-badge&logo=jest&logoColor=white)
 
-A React based web application that uses live restaurant/menu APIs, client-side routing, Redux Toolkit cart state, and Jest tests.
+A React based food-ordering app (Swiggy-style) that uses live restaurant/menu APIs, client-side routing, Redux Toolkit cart state, and Jest tests.
 
 ## Features
 
-- Browse restaurant cards with search and top-rated filtering
-- View restaurant menu categories and menu items
-- Add, remove, and clear cart items
-- Online/offline status indicator
-- Lazy-loaded grocery route
-- Unit and integration tests with React Testing Library
+- Browse restaurant cards with **live search** (filters as you type), a **top-rated** toggle, and **sorting** by rating, delivery time, or cost
+- **Offer badges** on restaurant cards (e.g. "50% OFF", "ITEMS AT ₹99")
+- View restaurant menu categories with an accordion layout
+- **Veg / Non-veg filter** and per-dish veg indicators on the menu
+- **Quantity-based cart** — adding a dish again bumps its quantity; adjust with +/- steppers
+- **Cart persists across page reloads** (localStorage)
+- **Bill details** (item total, delivery fee, GST) with a place-order flow
+- Online/offline status indicator with auto-retry when the connection returns
+- Lazy-loaded grocery route and a dedicated **404 Not Found** page
+- Unit and integration tests with Jest and React Testing Library
 
 ## Tech Stack
 

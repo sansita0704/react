@@ -2,7 +2,12 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Outlet,
+    ScrollRestoration,
+} from "react-router";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
@@ -11,6 +16,7 @@ import UserContext from "./utils/UserContext";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
+import NotFound from "./components/NotFound";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -39,6 +45,7 @@ const AppLayout = () => {
                 value={{ loggedInUser: userName, setUserName }}
             >
                 <div className="app">
+                    <ScrollRestoration />
                     <Header />
                     <Outlet />
                 </div>
@@ -67,7 +74,13 @@ const appRouter = createBrowserRouter([
             {
                 path: "/grocery",
                 element: (
-                    <Suspense fallback={<h1>Loading...</h1>}>
+                    <Suspense
+                        fallback={
+                            <p className="text-xl text-center my-10">
+                                Loading...
+                            </p>
+                        }
+                    >
                         <Grocery />
                     </Suspense>
                 ),
@@ -79,6 +92,12 @@ const appRouter = createBrowserRouter([
             {
                 path: "/cart",
                 element: <Cart />,
+            },
+            {
+                // Catch-all for unknown URLs: renders inside the layout so the
+                // header stays visible (unlike errorElement, which replaces it).
+                path: "*",
+                element: <NotFound />,
             },
         ],
         errorElement: <Error />,

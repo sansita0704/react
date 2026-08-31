@@ -1,4 +1,3 @@
-import { useState } from "react";
 import MenuCard from "./MenuCard";
 
 const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
@@ -10,20 +9,26 @@ const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
 
     return (
         <div data-testid="menuCategory" className="px-5 py-4 my-5 bg-gray-50 rounded-4xl shadow-md">
-            <div
-                className="flex justify-between cursor-pointer"
+            <button
+                type="button"
+                className="flex justify-between items-center w-full cursor-pointer text-left"
                 onClick={handleClick}
+                aria-expanded={showItems}
             >
                 <h2 className="text-2xl font-bold">
                     {title} ({itemCards.length})
                 </h2>
-                <span className="text-3xl">
+                <span
+                    className={`text-3xl transition-transform duration-300 ${
+                        showItems ? "rotate-180" : ""
+                    }`}
+                >
                     <i
                         className="bi bi-arrow-down-short"
                         style={{ color: "#6d756f" }}
                     ></i>
                 </span>
-            </div>
+            </button>
 
             {/* Collapsible Content: Rendered always but max height and opacity is 0 if showItems is true. */}
             <div
@@ -38,7 +43,6 @@ const MenuCategory = ({ categoryData, showItems, setShowIndex }) => {
                         <MenuCard
                             key={item.card.info.id}
                             resInfo={item.card.info}
-                            btnText={"add"}
                         />
                     ))}
                 </div>
