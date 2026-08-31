@@ -30,7 +30,11 @@ class UserClass extends React.Component {
         // debugger;
         return (
             <div className="flex flex-col gap-0.5 items-center bg-[#f5780b33] p-5 rounded-2xl m-5 w-[40%]">
-                <img className="rounded-2xl" src={avatar_url}></img>
+                <img
+                    className="rounded-2xl"
+                    src={avatar_url}
+                    alt={name}
+                ></img>
                 <h2 className="text-xl font-bold mt-2">{name}</h2>
                 <h3>{location}</h3>
                 <p>sansita@gmail.com</p>

@@ -1,7 +1,7 @@
 {
     "name": "namaste-react",
     "version": "1.0.0",
-    "description": "Namaste react notes",
+    "description": "Foodify - a food ordering app built while learning React (Namaste React)",
     "license": "ISC",
     "author": "Sansita Jain",
     "type": "commonjs",
@@ -30,7 +30,6 @@
         "react-dom": "^19.1.1",
         "react-redux": "^9.2.0",
         "react-router": "^7.9.5",
-        "react-router-dom": "^7.9.5",
         "tailwindcss": "^4.1.18"
     },
     "browserslist": [

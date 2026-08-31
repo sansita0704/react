@@ -8,7 +8,9 @@ class About extends Component {
         super(props);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        document.title = "Foodify | About Us";
+    }
 
     render() {
         return (
